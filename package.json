@@ -1,0 +1,16 @@
+{
+  "name": "PebbleImages",
+  "version": "1.0.0",
+  "description": "A server for the a pebble watchface that grabs images",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Andrew McOlash",
+  "license": "ISC",
+  "dependencies": {
+    "console-stamp": "^0.1.6",
+    "express": "^4.13.0"
+  }
+}
