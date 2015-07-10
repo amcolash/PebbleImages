@@ -56,10 +56,13 @@ function convertImage() {
     -remap pebble_colors_64.gif \
     -define png:compression-level=9 -define png:compression-strategy=0 \
     -define png:exclude-chunk=all \
-    'public/tempImage.png'";
+    'public/image.png'";
 
   exec(cmd, function(error, stdout, stderr) {
     // command output is in stdout
+    console.log('Clearing temp image');
+    fs.unlinkSync('public/tempImage.jpg');
+    console.log('All set!');
   });
 }
 
@@ -75,7 +78,7 @@ var night = new Date(
   now.getFullYear(),
   now.getMonth(),
   now.getDate() + 1, // the next day, ...
-  0, 0, 0 // ...at 00:00:00 hours
+  0, 03, 0 // ...at 00:03:00 hours
 );
 var nextDay = night.getTime() - now.getTime();
 setTimeout(function() { getUrl(true) }, nextDay);
