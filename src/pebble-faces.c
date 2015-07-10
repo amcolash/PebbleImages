@@ -139,7 +139,7 @@ static void update_time(struct tm *tick_time) {
     int hour = tick_time->tm_hour;
     strftime(buffer_time, sizeof("00:00"), "%l:%M", tick_time);
     // Trim space character
-    if ((hour > 0 && hour < 12) || (hour > 12 && hour < 22)) {
+    if ((hour > 0 && hour < 9) || (hour > 11 && hour < 22)) {
       int i;
       for (i = 0; i < 4; i++) {
         buffer_time[i] = buffer_time[i+1];
@@ -196,7 +196,7 @@ static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
 //     lastCheck--;
 //   }
   
-  if (!current_bmp || last_check->tm_mday != tick_time->tm_mday) {
+  if (!current_bmp || (last_check->tm_mday != tick_time->tm_mday && tick_time->tm_min > 1)) {
     printf("showimage\n");
     show_image();
     time_t temp = time(NULL);
