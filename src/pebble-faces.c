@@ -19,6 +19,9 @@ static TextLayer *date_shadow1;
 static TextLayer *date_shadow2;
 static TextLayer *date_shadow3;
 
+static GBitmap *nat_geo_logo;
+static BitmapLayer *nat_geo_layer;
+
 static char buffer_time[] = "00:00";
 static char buffer_date[] = "00/00";
 
@@ -45,6 +48,13 @@ static void window_load(Window *window) {
   
   GRect bounds = layer_get_bounds(window_layer);
 
+  // Add temp nat geo logo while loading image
+  nat_geo_logo = gbitmap_create_with_resource(RESOURCE_ID_NAT_GEO_LOGO);
+  nat_geo_layer = bitmap_layer_create(bounds);
+  bitmap_layer_set_bitmap(nat_geo_layer, nat_geo_logo);
+  bitmap_layer_set_compositing_mode(nat_geo_layer, GCompOpSet);
+  layer_add_child(window_layer, bitmap_layer_get_layer(nat_geo_layer));
+  
   bitmap_layer = bitmap_layer_create(bounds);
   layer_add_child(window_layer, bitmap_layer_get_layer(bitmap_layer));
   current_bmp = NULL;
