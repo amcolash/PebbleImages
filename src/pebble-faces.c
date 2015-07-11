@@ -24,6 +24,7 @@ static char buffer_date[] = "00/00";
 
 static char *image = "http://pi.amcolash.com:5000/image.png";
 
+static int tick_check;
 struct tm *last_check;
 
 void show_image() {
@@ -139,7 +140,7 @@ static void update_time(struct tm *tick_time) {
     int hour = tick_time->tm_hour;
     strftime(buffer_time, sizeof("00:00"), "%l:%M", tick_time);
     // Trim space character
-    if ((hour > 0 && hour < 9) || (hour > 11 && hour < 22)) {
+    if ((hour > 0 && hour < 9) || (hour > 12 && hour < 22)) {
       int i;
       for (i = 0; i < 4; i++) {
         buffer_time[i] = buffer_time[i+1];
@@ -186,21 +187,15 @@ static void update_time(struct tm *tick_time) {
 }
 
 static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
-//   // Use a long-lived buffer
-//   if (!current_bmp && lastCheck == 0) {
-//     printf("showimage\n");
-//     show_image();
-//     lastCheck = 15;
-//   } else if (!current_bmp) {
-//     printf("tick\n");
-//     lastCheck--;
-//   }
-  
   if (!current_bmp || (last_check->tm_mday != tick_time->tm_mday && tick_time->tm_min > 1)) {
-    printf("showimage\n");
-    show_image();
-    time_t temp = time(NULL);
-    last_check = localtime(&temp);
+    if (tick_check == 0) {
+      printf("showimage\n");
+      tick_check = 15;
+      show_image();
+    } else {
+      printf("tick\n");
+      tick_check--;
+    }
   }
   
   update_time(tick_time);
@@ -236,6 +231,9 @@ void download_complete_handler(NetDownload *download) {
   // Change tick handler to every minute now to save some battery
   tick_timer_service_unsubscribe();
   tick_timer_service_subscribe(MINUTE_UNIT, tick_handler);
+  
+  time_t temp = time(NULL);
+  last_check = localtime(&temp);
 }
 
 static void window_unload(Window *window) {

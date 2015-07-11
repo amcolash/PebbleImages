@@ -35,10 +35,11 @@ Pebble.addEventListener("appmessage", function (e) {
 function downloadBinaryResource(imageURL, callback, errorCallback) {
   var currentDate = new Date();
   var previousDate = new Date(parseInt(window.localStorage.getItem("previousDate")));
-  if (currentDate.getDate() === previousDate.getDate() && currentDate.getMonth() === previousDate.getMonth()) {
-    console.log("No need to download");
-    callback(JSON.parse(window.localStorage.getItem("image")));
-  } else {
+//   if (currentDate.getDate() === previousDate.getDate() && currentDate.getMonth() === previousDate.getMonth()) {
+//     console.log("No need to download");
+//     callback(JSON.parse(window.localStorage.getItem("image")));
+//   } else {
+  if (true) {
 
     var req = new XMLHttpRequest();
     req.open("GET", imageURL, true);

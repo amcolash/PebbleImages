@@ -13,12 +13,17 @@
     "longName": "Pebble Images",
     "projectType": "native",
     "resources": {
-        "media": []
+        "media": [
+            {
+                "file": "images/nat_geo.png",
+                "name": "NAT_GEO_LOGO",
+                "type": "png"
+            }
+        ]
     },
     "sdkVersion": "3",
     "shortName": "PbImages",
     "targetPlatforms": [
-        "aplite",
         "basalt"
     ],
     "uuid": "3a173d03-4c82-448c-8c79-2f0e7ef8b9a1",
